@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+spring:
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    username: root
+    password: root
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: guest
+    port: 5672
+    publisher-returns: true   #回退消息，当找不到routing key对应的队列时，是否回退信息
+    listener:
+      simple:
+        concurrency: 10 #消费者最少数量
+        max-concurrency: 10 #消费者最大数量
+        prefetch: 1 #消费者每次处理一条消息
+        auto-startup: true
+        default-requeue-rejected: false  #消息被拒绝是否重新进入队列
+  redis:
+    database: 0
+    host: 127.0.0.1
+    #redis默认端口
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 0
+    # 连接超时时间（毫秒）
+    timeout: 5000ms
+
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+
+# Mybatis SQL打印
+#logging:
+#  level:
+#    com.seven.seckill.mapper: debug
