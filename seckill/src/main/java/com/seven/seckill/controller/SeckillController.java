@@ -98,7 +98,7 @@ public class SeckillController{
                     int count = (int)redisTemplate.opsForValue().get(("seckillGoods:"+ goodsOrderVo.getGoodsId()));
                     if (count<1){
                         log.info("库存不足");
-                        throw new GlobalException(ResponseEnum.NULL_ERROR);
+                        return new ResponseResult<>(ResponseEnum.NULL_ERROR);
                     }
                     //使用decrement原子操作进行递减库存
                     redisTemplate.opsForValue().decrement("seckillGoods:"+ goodsOrderVo.getGoodsId());
